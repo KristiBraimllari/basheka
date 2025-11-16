@@ -1,0 +1,36 @@
+{
+  "name": "steel-fabrication-website",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@sanity/client": "^6.29.1",
+    "@sanity/image-url": "^1.2.0",
+    "@sanity/vision": "^4.15.0",
+    "framer-motion": "^11.0.0",
+    "lucide-react": "^0.344.0",
+    "next": "^14.2.0",
+    "next-sanity": "^11.6.6",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "sanity": "^4.15.0",
+    "styled-components": "^6.1.19"
+  },
+  "devDependencies": {
+    "@sanity/cli": "^4.15.0",
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8.56.0",
+    "eslint-config-next": "^14.2.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.3.0"
+  }
+}
