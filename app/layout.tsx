@@ -1,7 +1,16 @@
 import type { Metadata } from 'next'
+import { Teko } from 'next/font/google'
+import { GeistSans } from 'geist/font/sans'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
+
+const teko = Teko({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-teko',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Steel & Iron Fabrication | Transforming Blueprints into Structures',
@@ -20,8 +29,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body>
+    <html lang="en" className={`scroll-smooth ${teko.variable}`}>
+      <body className={GeistSans.className}>
         <Navigation />
         <main className="relative">{children}</main>
         <Footer />

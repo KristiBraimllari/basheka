@@ -15,7 +15,6 @@ html {
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', system-ui, sans-serif;
   color: #1d1d1f;
   background-color: #ffffff;
   line-height: 1.47059;
@@ -25,6 +24,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-teko), sans-serif;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.1;

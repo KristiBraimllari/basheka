@@ -41,6 +41,10 @@ const config: Config = {
           'system-ui',
           'sans-serif',
         ],
+        heading: [
+          'var(--font-teko)',
+          'sans-serif',
+        ],
       },
       fontSize: {
         'apple-hero': ['80px', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
