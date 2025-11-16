@@ -136,7 +136,7 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
           {project.testimonial && (
             <div className="bg-apple-gray-50 rounded-3xl p-8 border-l-4 border-apple-gray-700">
               <p className="text-[21px] text-apple-gray-700 italic mb-4 leading-relaxed">
-                "{project.testimonial.quote}"
+                &quot;{project.testimonial.quote}&quot;
               </p>
               <div>
                 <div className="font-semibold text-apple-gray-700">
@@ -156,7 +156,7 @@ export default function ProjectDetailPage({ params }: ProjectPageProps) {
             Ready to Start Your Project?
           </h2>
           <p className="text-[21px] text-white/80 mb-12">
-            Let's discuss how we can bring your vision to life.
+            Let&apos;s discuss how we can bring your vision to life.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link

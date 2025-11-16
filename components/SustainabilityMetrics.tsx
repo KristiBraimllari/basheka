@@ -29,7 +29,7 @@ export default function SustainabilityMetrics({ metrics }: SustainabilityMetrics
             Our Commitment to Sustainability
           </h2>
           <p className="text-[21px] text-apple-gray-500 max-w-2xl mx-auto">
-            We're dedicated to environmental responsibility while maintaining the highest standards of quality and performance.
+            We&apos;re dedicated to environmental responsibility while maintaining the highest standards of quality and performance.
           </p>
         </motion.div>
 

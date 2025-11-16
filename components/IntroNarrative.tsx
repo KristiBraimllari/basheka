@@ -39,13 +39,13 @@ export default function IntroNarrative() {
             className="space-y-6"
           >
             <p className="text-[21px] text-apple-gray-500 leading-relaxed">
-              For over three decades, we've been transforming raw steel into monumental structures that define skylines and connect communities.
+              For over three decades, we&apos;ve been transforming raw steel into monumental structures that define skylines and connect communities.
             </p>
             <p className="text-[21px] text-apple-gray-500 leading-relaxed">
               Today, we combine time-tested craftsmanship with cutting-edge technology—from advanced fiber laser cutting systems to sophisticated project management tools—ensuring every project meets the highest standards of excellence.
             </p>
             <p className="text-[21px] text-apple-gray-500 leading-relaxed">
-              We don't just fabricate steel; we build partnerships, solve complex challenges, and deliver results that stand the test of time.
+              We don&apos;t just fabricate steel; we build partnerships, solve complex challenges, and deliver results that stand the test of time.
             </p>
           </motion.div>
 

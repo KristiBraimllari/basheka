@@ -116,7 +116,7 @@ export default function ResourcesPage() {
                 More Calculators Coming Soon
               </h3>
               <p className="text-apple-gray-500 leading-relaxed">
-                We're continuously adding new tools to help you with your projects. Check back soon for cost estimators, material selectors, and more.
+                We&apos;re continuously adding new tools to help you with your projects. Check back soon for cost estimators, material selectors, and more.
               </p>
             </div>
           </div>

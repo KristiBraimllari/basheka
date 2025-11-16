@@ -77,7 +77,7 @@ export default function QuoteForm() {
           Thank You!
         </h2>
         <p className="text-lg text-charcoal-600 mb-6">
-          We've received your quote request. Our team will review your project details and get back to you within 24 hours.
+          We&apos;ve received your quote request. Our team will review your project details and get back to you within 24 hours.
         </p>
         <a
           href="/"

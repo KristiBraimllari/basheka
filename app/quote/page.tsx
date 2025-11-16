@@ -45,7 +45,7 @@ export default function QuotePage() {
                 Request a Quote
               </h1>
               <p className="text-[24px] text-apple-gray-500 leading-relaxed max-w-lg">
-                Tell us about your project and we'll provide a detailed estimate within 24 hours
+                Tell us about your project and we&apos;ll provide a detailed estimate within 24 hours
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link

@@ -306,7 +306,7 @@ export default function Home() {
               Ready to Start?
             </h2>
             <p className="text-[21px] text-white/80 mb-12">
-              Let's discuss how we can bring your vision to life with precision and expertise.
+              Let&apos;s discuss how we can bring your vision to life with precision and expertise.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link

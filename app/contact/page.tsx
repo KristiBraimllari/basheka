@@ -57,7 +57,7 @@ export default function ContactPage() {
                 </motion.div>
               </div>
               <h1 className="text-apple-hero md:text-[100px] text-[64px] font-semibold text-apple-gray-700 tracking-tight leading-[1.05]">
-                Let's Talk
+                Let&apos;s Talk
               </h1>
               <p className="text-[24px] text-apple-gray-500 leading-relaxed max-w-lg">
                 Get in touch with our team to discuss your project needs
@@ -182,7 +182,7 @@ export default function ContactPage() {
                 </h2>
                 {isSubmitted ? (
                   <div className="bg-apple-gray-50 border border-apple-gray-200 rounded-2xl p-6 text-apple-gray-700">
-                    Thank you! Your message has been sent. We'll get back to you soon.
+                    Thank you! Your message has been sent. We&apos;ll get back to you soon.
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">

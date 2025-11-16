@@ -191,7 +191,7 @@ export default function AboutPage() {
               Join Our Team
             </h2>
             <p className="text-[21px] text-white/80 mb-12">
-              We're always looking for talented individuals who share our passion for excellence and innovation.
+              We&apos;re always looking for talented individuals who share our passion for excellence and innovation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
