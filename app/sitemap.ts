@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
-import { services, projects } from '@/lib/cms-data'
+import { getServices, getProjects } from '@/lib/api'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://steelworks.com'
 
   const routes = [
@@ -18,6 +18,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     changeFrequency: 'monthly' as const,
     priority: route === '' ? 1 : 0.8,
   }))
+
+  const services = await getServices()
+  const projects = await getProjects()
 
   const serviceRoutes = services.map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,

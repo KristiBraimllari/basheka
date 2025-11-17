@@ -6,7 +6,6 @@ import resource from './resource'
 import teamMember from './teamMember'
 import timelineEvent from './timelineEvent'
 import sustainabilityMetric from './sustainabilityMetric'
-import siteSettings from './siteSettings'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -17,6 +16,5 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     teamMember,
     timelineEvent,
     sustainabilityMetric,
-    siteSettings,
   ],
 }
