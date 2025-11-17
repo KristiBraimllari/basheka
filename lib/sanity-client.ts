@@ -13,11 +13,18 @@ export const client = projectId
   ? createClient({
       projectId,
       dataset,
-      useCdn: true, // Set to false if statically generating pages, using ISR or using the token
+      useCdn: false, // Disabled for immediate updates - set to true for better performance
       apiVersion,
       token: process.env.SANITY_API_TOKEN, // Optional, for private datasets
     })
   : null as any // Will be handled by fallback in api.ts
+
+// Log Sanity configuration status
+if (projectId) {
+  console.log(`[Sanity] Client initialized - Project: ${projectId}, Dataset: ${dataset}, CDN: disabled`)
+} else {
+  console.warn('[Sanity] Client not initialized - Missing NEXT_PUBLIC_SANITY_PROJECT_ID')
+}
 
 // Image URL builder for Sanity images
 let builder: ReturnType<typeof imageUrlBuilder> | null = null

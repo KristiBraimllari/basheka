@@ -11,8 +11,8 @@ import type {
   SustainabilityMetric,
 } from './cms-types'
 
-// GROQ Query for Hero Section
-const heroQuery = `*[_type == "heroSection"][0]{
+// GROQ Query for Hero Section (excludes drafts)
+const heroQuery = `*[_type == "heroSection" && !(_id in path("drafts.**"))][0]{
   _id,
   title,
   subtitle,
@@ -22,8 +22,8 @@ const heroQuery = `*[_type == "heroSection"][0]{
   ctaSecondary
 }`
 
-// GROQ Query for Services
-const servicesQuery = `*[_type == "service"] | order(order asc){
+// GROQ Query for Services (excludes drafts)
+const servicesQuery = `*[_type == "service" && !(_id in path("drafts.**"))] | order(order asc){
   _id,
   title,
   slug,
@@ -40,8 +40,8 @@ const servicesQuery = `*[_type == "service"] | order(order asc){
   order
 }`
 
-// GROQ Query for Single Service
-const serviceBySlugQuery = `*[_type == "service" && slug.current == $slug][0]{
+// GROQ Query for Single Service (excludes drafts)
+const serviceBySlugQuery = `*[_type == "service" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
   _id,
   title,
   slug,
@@ -57,8 +57,8 @@ const serviceBySlugQuery = `*[_type == "service" && slug.current == $slug][0]{
   }
 }`
 
-// GROQ Query for Projects
-const projectsQuery = `*[_type == "project"] | order(completionDate desc){
+// GROQ Query for Projects (excludes drafts)
+const projectsQuery = `*[_type == "project" && !(_id in path("drafts.**"))] | order(completionDate desc){
   _id,
   title,
   "slug": slug.current,
@@ -72,8 +72,8 @@ const projectsQuery = `*[_type == "project"] | order(completionDate desc){
   completionDate
 }`
 
-// GROQ Query for Single Project
-const projectBySlugQuery = `*[_type == "project" && slug.current == $slug][0]{
+// GROQ Query for Single Project (excludes drafts)
+const projectBySlugQuery = `*[_type == "project" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
   _id,
   title,
   "slug": slug.current,
@@ -87,8 +87,8 @@ const projectBySlugQuery = `*[_type == "project" && slug.current == $slug][0]{
   completionDate
 }`
 
-// GROQ Query for Resources
-const resourcesQuery = `*[_type == "resource"] | order(publishedDate desc){
+// GROQ Query for Resources (excludes drafts)
+const resourcesQuery = `*[_type == "resource" && !(_id in path("drafts.**"))] | order(publishedDate desc){
   _id,
   title,
   type,
@@ -99,8 +99,8 @@ const resourcesQuery = `*[_type == "resource"] | order(publishedDate desc){
   publishedDate
 }`
 
-// GROQ Query for Team Members
-const teamMembersQuery = `*[_type == "teamMember"] | order(order asc){
+// GROQ Query for Team Members (excludes drafts)
+const teamMembersQuery = `*[_type == "teamMember" && !(_id in path("drafts.**"))] | order(order asc){
   _id,
   name,
   role,
@@ -109,8 +109,8 @@ const teamMembersQuery = `*[_type == "teamMember"] | order(order asc){
   order
 }`
 
-// GROQ Query for Timeline Events
-const timelineEventsQuery = `*[_type == "timelineEvent"] | order(year asc){
+// GROQ Query for Timeline Events (excludes drafts)
+const timelineEventsQuery = `*[_type == "timelineEvent" && !(_id in path("drafts.**"))] | order(year asc){
   _id,
   year,
   title,
@@ -118,8 +118,8 @@ const timelineEventsQuery = `*[_type == "timelineEvent"] | order(year asc){
   image
 }`
 
-// GROQ Query for Sustainability Metrics
-const sustainabilityMetricsQuery = `*[_type == "sustainabilityMetric"] | order(order asc){
+// GROQ Query for Sustainability Metrics (excludes drafts)
+const sustainabilityMetricsQuery = `*[_type == "sustainabilityMetric" && !(_id in path("drafts.**"))] | order(order asc){
   _id,
   label,
   value,
@@ -209,14 +209,17 @@ export async function getHeroSection(): Promise<HeroSection> {
   try {
     // Check if Sanity is configured
     if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || !client) {
+      console.warn('[Sanity] Not configured - using mock data. Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local')
       const { heroData } = await import('./cms-data')
       return heroData
     }
 
+    console.log('[Sanity] Fetching hero section...')
     const data = await client.fetch(heroQuery)
+    console.log('[Sanity] Hero section fetched:', data ? 'Success' : 'No data found')
     return transformHeroSection(data)
   } catch (error) {
-    console.error('Error fetching hero section from Sanity:', error)
+    console.error('[Sanity] Error fetching hero section:', error)
     // Fallback to mock data
     const { heroData } = await import('./cms-data')
     return heroData
@@ -226,14 +229,17 @@ export async function getHeroSection(): Promise<HeroSection> {
 export async function getServices(): Promise<Service[]> {
   try {
     if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || !client) {
+      console.warn('[Sanity] Not configured - using mock data. Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local')
       const { services } = await import('./cms-data')
       return services
     }
 
+    console.log('[Sanity] Fetching services...')
     const data = await client.fetch(servicesQuery)
+    console.log(`[Sanity] Services fetched: ${data?.length || 0} items`)
     return data.map(transformService)
   } catch (error) {
-    console.error('Error fetching services from Sanity:', error)
+    console.error('[Sanity] Error fetching services:', error)
     // Fallback to mock data
     const { services } = await import('./cms-data')
     return services
@@ -259,14 +265,17 @@ export async function getServiceBySlug(slug: string): Promise<Service | null> {
 export async function getProjects(): Promise<Project[]> {
   try {
     if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || !client) {
+      console.warn('[Sanity] Not configured - using mock data. Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local')
       const { projects } = await import('./cms-data')
       return projects
     }
 
+    console.log('[Sanity] Fetching projects...')
     const data = await client.fetch(projectsQuery)
+    console.log(`[Sanity] Projects fetched: ${data?.length || 0} items`)
     return data.map(transformProject)
   } catch (error) {
-    console.error('Error fetching projects from Sanity:', error)
+    console.error('[Sanity] Error fetching projects:', error)
     // Fallback to mock data
     const { projects } = await import('./cms-data')
     return projects
@@ -292,11 +301,14 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
 export async function getResources(): Promise<Resource[]> {
   try {
     if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || !client) {
+      console.warn('[Sanity] Not configured - using mock data. Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local')
       const { resources } = await import('./cms-data')
       return resources
     }
 
+    console.log('[Sanity] Fetching resources...')
     const data = await client.fetch(resourcesQuery)
+    console.log(`[Sanity] Resources fetched: ${data?.length || 0} items`)
     return data.map((item: any) => ({
       id: item._id,
       title: item.title,
@@ -308,7 +320,7 @@ export async function getResources(): Promise<Resource[]> {
       publishedDate: item.publishedDate,
     }))
   } catch (error) {
-    console.error('Error fetching resources from Sanity:', error)
+    console.error('[Sanity] Error fetching resources:', error)
     const { resources } = await import('./cms-data')
     return resources
   }
@@ -323,11 +335,14 @@ export async function getTestimonials(): Promise<Testimonial[]> {
 export async function getTeamMembers(): Promise<TeamMember[]> {
   try {
     if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || !client) {
+      console.warn('[Sanity] Not configured - using mock data. Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local')
       const { teamMembers } = await import('./cms-data')
       return teamMembers
     }
 
+    console.log('[Sanity] Fetching team members...')
     const data = await client.fetch(teamMembersQuery)
+    console.log(`[Sanity] Team members fetched: ${data?.length || 0} items`)
     return data.map((item: any) => ({
       id: item._id,
       name: item.name,
@@ -336,7 +351,7 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
       imageUrl: getImageUrl(item.image),
     }))
   } catch (error) {
-    console.error('Error fetching team members from Sanity:', error)
+    console.error('[Sanity] Error fetching team members:', error)
     const { teamMembers } = await import('./cms-data')
     return teamMembers
   }
@@ -345,11 +360,14 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
 export async function getTimelineEvents(): Promise<TimelineEvent[]> {
   try {
     if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || !client) {
+      console.warn('[Sanity] Not configured - using mock data. Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local')
       const { timelineEvents } = await import('./cms-data')
       return timelineEvents
     }
 
+    console.log('[Sanity] Fetching timeline events...')
     const data = await client.fetch(timelineEventsQuery)
+    console.log(`[Sanity] Timeline events fetched: ${data?.length || 0} items`)
     return data.map((item: any) => ({
       id: item._id,
       year: item.year,
@@ -358,7 +376,7 @@ export async function getTimelineEvents(): Promise<TimelineEvent[]> {
       imageUrl: getImageUrl(item.image),
     }))
   } catch (error) {
-    console.error('Error fetching timeline events from Sanity:', error)
+    console.error('[Sanity] Error fetching timeline events:', error)
     const { timelineEvents } = await import('./cms-data')
     return timelineEvents
   }
@@ -367,11 +385,14 @@ export async function getTimelineEvents(): Promise<TimelineEvent[]> {
 export async function getSustainabilityMetrics(): Promise<SustainabilityMetric[]> {
   try {
     if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || !client) {
+      console.warn('[Sanity] Not configured - using mock data. Set NEXT_PUBLIC_SANITY_PROJECT_ID in .env.local')
       const { sustainabilityMetrics } = await import('./cms-data')
       return sustainabilityMetrics
     }
 
+    console.log('[Sanity] Fetching sustainability metrics...')
     const data = await client.fetch(sustainabilityMetricsQuery)
+    console.log(`[Sanity] Sustainability metrics fetched: ${data?.length || 0} items`)
     return data.map((item: any) => ({
       id: item._id,
       label: item.label,
@@ -380,7 +401,7 @@ export async function getSustainabilityMetrics(): Promise<SustainabilityMetric[]
       description: item.description,
     }))
   } catch (error) {
-    console.error('Error fetching sustainability metrics from Sanity:', error)
+    console.error('[Sanity] Error fetching sustainability metrics:', error)
     const { sustainabilityMetrics } = await import('./cms-data')
     return sustainabilityMetrics
   }
