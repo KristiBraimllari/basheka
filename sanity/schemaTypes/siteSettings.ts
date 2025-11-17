@@ -4,12 +4,6 @@ export default defineType({
   name: 'siteSettings',
   title: 'Site Settings',
   type: 'document',
-  __experimental_actions: [
-    // 'create', // Disable create - only one instance allowed
-    'update',
-    // 'delete', // Disable delete - prevent accidental deletion
-    'publish',
-  ],
   fields: [
     {
       name: 'companyName',
