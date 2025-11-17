@@ -1,11 +1,17 @@
-import { getSiteSettings } from '@/lib/api'
-import QuotePageClient from '@/components/QuotePageClient'
+'use client'
 
-export default async function QuotePage() {
-  const siteSettings = await getSiteSettings()
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import QuoteForm from '@/components/QuoteForm'
+import BackButton from '@/components/BackButton'
 
-  return <QuotePageClient siteSettings={siteSettings} />
+interface QuotePageClientProps {
+  siteSettings: any
 }
+
+export default function QuotePageClient({ siteSettings }: QuotePageClientProps) {
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -40,10 +46,10 @@ export default async function QuotePage() {
                 </motion.div>
               </div>
               <h1 className="text-apple-hero md:text-[100px] text-[64px] font-semibold text-apple-gray-700 tracking-tight leading-[1.05]">
-                Request a Quote
+                {siteSettings.quoteHeroTitle || 'Request a Quote'}
               </h1>
               <p className="text-[24px] text-apple-gray-500 leading-relaxed max-w-lg">
-                Tell us about your project and we&apos;ll provide a detailed estimate within 24 hours
+                {siteSettings.quoteHeroDescription || 'Tell us about your project and we&apos;ll provide a detailed estimate within 24 hours'}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
@@ -84,3 +90,4 @@ export default async function QuotePage() {
     </>
   )
 }
+

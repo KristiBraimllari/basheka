@@ -1,11 +1,20 @@
-import { getResources } from '@/lib/api'
-import ResourcesPageClient from '@/components/ResourcesPageClient'
+'use client'
 
-export default async function ResourcesPage() {
-  const resources = await getResources()
+import { useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
+import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
+import ResourceCard from '@/components/ResourceCard'
+import WeightCalculator from '@/components/WeightCalculator'
+import BackButton from '@/components/BackButton'
+import type { Resource } from '@/lib/cms-types'
 
-  return <ResourcesPageClient resources={resources} />
+interface ResourcesPageClientProps {
+  resources: Resource[]
 }
+
+export default function ResourcesPageClient({ resources }: ResourcesPageClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [selectedType, setSelectedType] = useState<string>('all')
   const heroRef = useRef<HTMLDivElement>(null)
@@ -220,3 +229,4 @@ export default async function ResourcesPage() {
     </>
   )
 }
+

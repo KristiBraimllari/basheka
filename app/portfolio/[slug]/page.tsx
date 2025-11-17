@@ -1,8 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { Calendar, Building, Wrench } from 'lucide-react'
-import { projects, services } from '@/lib/cms-data'
-import Image from 'next/image'
+import { getProjectBySlug, getProjects, getServices } from '@/lib/api'
 import BackButton from '@/components/BackButton'
 
 interface ProjectPageProps {
@@ -12,13 +11,17 @@ interface ProjectPageProps {
 }
 
 export async function generateStaticParams() {
+  const projects = await getProjects()
   return projects.map((project) => ({
     slug: project.slug,
   }))
 }
 
-export default function ProjectDetailPage({ params }: ProjectPageProps) {
-  const project = projects.find((p) => p.slug === params.slug)
+export default async function ProjectDetailPage({ params }: ProjectPageProps) {
+  const [project, services] = await Promise.all([
+    getProjectBySlug(params.slug),
+    getServices(),
+  ])
 
   if (!project) {
     notFound()

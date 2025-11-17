@@ -1,11 +1,17 @@
-import { getSiteSettings } from '@/lib/api'
-import ContactPageClient from '@/components/ContactPageClient'
+'use client'
 
-export default async function ContactPage() {
-  const siteSettings = await getSiteSettings()
+import { useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
+import Link from 'next/link'
+import { Mail, Phone, MapPin, Send, ArrowRight } from 'lucide-react'
+import BackButton from '@/components/BackButton'
 
-  return <ContactPageClient siteSettings={siteSettings} />
+interface ContactPageClientProps {
+  siteSettings: any
 }
+
+export default function ContactPageClient({ siteSettings }: ContactPageClientProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,6 +34,8 @@ export default async function ContactPage() {
     setIsSubmitted(true)
     setTimeout(() => setIsSubmitted(false), 5000)
   }
+
+  const contactInfo = siteSettings.contactInfo || {}
 
   return (
     <>
@@ -55,10 +63,10 @@ export default async function ContactPage() {
                 </motion.div>
               </div>
               <h1 className="text-apple-hero md:text-[100px] text-[64px] font-semibold text-apple-gray-700 tracking-tight leading-[1.05]">
-                Let&apos;s Talk
+                {siteSettings.contactHeroTitle || 'Let&apos;s Talk'}
               </h1>
               <p className="text-[24px] text-apple-gray-500 leading-relaxed max-w-lg">
-                Get in touch with our team to discuss your project needs
+                {siteSettings.contactHeroDescription || 'Get in touch with our team to discuss your project needs'}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
@@ -86,26 +94,30 @@ export default async function ContactPage() {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-apple-gray-100 to-apple-gray-200 rounded-3xl overflow-hidden" />
               {/* Floating Contact Info */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-                className="absolute top-8 right-8 bg-white/90 backdrop-blur-xl rounded-2xl p-6 shadow-lg"
-              >
-                <Phone className="text-apple-gray-700 mb-2" size={24} />
-                <div className="text-sm font-semibold text-apple-gray-700">+1 (555) 123-4567</div>
-                <div className="text-xs text-apple-gray-500">Mon-Fri, 8am-5pm</div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1 }}
-                className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-xl rounded-2xl p-6 shadow-lg"
-              >
-                <Mail className="text-apple-gray-700 mb-2" size={24} />
-                <div className="text-sm font-semibold text-apple-gray-700">info@steelworks.com</div>
-                <div className="text-xs text-apple-gray-500">24hr response</div>
-              </motion.div>
+              {contactInfo.phone && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.8 }}
+                  className="absolute top-8 right-8 bg-white/90 backdrop-blur-xl rounded-2xl p-6 shadow-lg"
+                >
+                  <Phone className="text-apple-gray-700 mb-2" size={24} />
+                  <div className="text-sm font-semibold text-apple-gray-700">{contactInfo.phone}</div>
+                  <div className="text-xs text-apple-gray-500">Mon-Fri, 8am-5pm</div>
+                </motion.div>
+              )}
+              {contactInfo.email && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1 }}
+                  className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-xl rounded-2xl p-6 shadow-lg"
+                >
+                  <Mail className="text-apple-gray-700 mb-2" size={24} />
+                  <div className="text-sm font-semibold text-apple-gray-700">{contactInfo.email}</div>
+                  <div className="text-xs text-apple-gray-500">24hr response</div>
+                </motion.div>
+              )}
             </motion.div>
           </div>
         </div>
@@ -137,9 +149,9 @@ export default async function ContactPage() {
 
               <div className="space-y-6">
                 {[
-                  { icon: Phone, title: 'Phone', value: '+1 (555) 123-4567', desc: 'Mon-Fri, 8am-5pm EST' },
-                  { icon: Mail, title: 'Email', value: 'info@steelworks.com', desc: 'We respond within 24 hours' },
-                  { icon: MapPin, title: 'Address', value: '123 Industrial Blvd', desc: 'Manufacturing City, ST 12345' },
+                  { icon: Phone, title: 'Phone', value: contactInfo.phone || '+1 (555) 123-4567', desc: 'Mon-Fri, 8am-5pm EST' },
+                  { icon: Mail, title: 'Email', value: contactInfo.email || 'info@steelworks.com', desc: 'We respond within 24 hours' },
+                  { icon: MapPin, title: 'Address', value: contactInfo.address?.street || '123 Industrial Blvd', desc: contactInfo.address ? `${contactInfo.address.city}, ${contactInfo.address.state} ${contactInfo.address.zipCode}` : 'Manufacturing City, ST 12345' },
                 ].map((item, index) => {
                   const Icon = item.icon
                   return (
@@ -260,3 +272,4 @@ export default async function ContactPage() {
     </>
   )
 }
+
