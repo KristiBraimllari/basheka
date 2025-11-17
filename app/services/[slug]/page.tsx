@@ -12,6 +12,10 @@ interface ServicePageProps {
   }
 }
 
+// Force dynamic rendering to always fetch fresh data from Sanity
+export const dynamic = 'force-dynamic'
+export const dynamicParams = true
+
 export async function generateStaticParams() {
   const services = await getServices()
   return services.map((service) => ({

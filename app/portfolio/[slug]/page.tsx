@@ -11,6 +11,10 @@ interface ProjectPageProps {
   }
 }
 
+// Force dynamic rendering to always fetch fresh data from Sanity
+export const dynamic = 'force-dynamic'
+export const dynamicParams = true
+
 export async function generateStaticParams() {
   const { getProjects } = await import('@/lib/api')
   const projects = await getProjects()
