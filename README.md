@@ -47,3 +47,4 @@ npm run dev
 The site is designed to work with headless CMS solutions like Contentful, Strapi, or Sanity. CMS data models are defined in `/lib/cms-types.ts`.
 
 # Build fix
+# Trigger new deployment
