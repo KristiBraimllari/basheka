@@ -4,6 +4,12 @@ export default defineType({
   name: 'heroSection',
   title: 'Hero Section',
   type: 'document',
+  __experimental_actions: [
+    // 'create', // Disable create - only one instance allowed
+    'update',
+    // 'delete', // Disable delete - prevent accidental deletion
+    'publish',
+  ],
   fields: [
     {
       name: 'title',

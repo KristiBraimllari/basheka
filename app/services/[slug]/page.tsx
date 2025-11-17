@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowRight, CheckCircle } from 'lucide-react'
-import { getServiceBySlug, getServices } from '@/lib/api'
+import { ArrowRight, Download, CheckCircle } from 'lucide-react'
+import { services } from '@/lib/cms-data'
 import ProcessSteps from '@/components/ProcessSteps'
 import TechnicalSpecs from '@/components/TechnicalSpecs'
 import BackButton from '@/components/BackButton'
@@ -13,14 +13,13 @@ interface ServicePageProps {
 }
 
 export async function generateStaticParams() {
-  const services = await getServices()
   return services.map((service) => ({
     slug: service.slug,
   }))
 }
 
-export default async function ServiceDetailPage({ params }: ServicePageProps) {
-  const service = await getServiceBySlug(params.slug)
+export default function ServiceDetailPage({ params }: ServicePageProps) {
+  const service = services.find((s) => s.slug === params.slug)
 
   if (!service) {
     notFound()

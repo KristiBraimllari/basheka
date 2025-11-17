@@ -7,8 +7,6 @@ import teamMember from './teamMember'
 import timelineEvent from './timelineEvent'
 import sustainabilityMetric from './sustainabilityMetric'
 import siteSettings from './siteSettings'
-import trustSignal from './trustSignal'
-import homepageSection from './homepageSection'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -20,7 +18,5 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     timelineEvent,
     sustainabilityMetric,
     siteSettings,
-    trustSignal,
-    homepageSection,
   ],
 }

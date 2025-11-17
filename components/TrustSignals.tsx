@@ -3,35 +3,30 @@
 import { motion } from 'framer-motion'
 import { Award, Shield, Users, Calendar } from 'lucide-react'
 
-const iconMap: Record<string, typeof Award> = {
-  award: Award,
-  shield: Shield,
-  users: Users,
-  calendar: Calendar,
-}
+const trustItems = [
+  {
+    icon: Award,
+    label: 'Certified Quality',
+    value: 'ISO 9001',
+  },
+  {
+    icon: Shield,
+    label: 'Safety Standards',
+    value: 'OSHA Compliant',
+  },
+  {
+    icon: Users,
+    label: 'Satisfied Clients',
+    value: '500+',
+  },
+  {
+    icon: Calendar,
+    label: 'Years of Experience',
+    value: '30+',
+  },
+]
 
-interface TrustSignal {
-  label: string
-  value: string
-  icon: string
-}
-
-interface TrustSignalsProps {
-  trustSignals?: TrustSignal[]
-  title?: string
-  subtitle?: string
-}
-
-export default function TrustSignals({ 
-  trustSignals = [
-    { label: 'Certified Quality', value: 'ISO 9001', icon: 'award' },
-    { label: 'Safety Standards', value: 'OSHA Compliant', icon: 'shield' },
-    { label: 'Satisfied Clients', value: '500+', icon: 'users' },
-    { label: 'Years of Experience', value: '30+', icon: 'calendar' },
-  ],
-  title = 'Trusted by Industry Leaders',
-  subtitle = 'Our commitment to quality, safety, and excellence has earned the trust of clients across industries.',
-}: TrustSignalsProps) {
+export default function TrustSignals() {
   return (
     <section className="py-32 bg-apple-gray-50">
       <div className="max-w-[1024px] mx-auto px-6 lg:px-12">
@@ -43,16 +38,16 @@ export default function TrustSignals({
           className="text-center mb-20"
         >
           <h2 className="text-apple-title md:text-[56px] text-[40px] font-semibold text-apple-gray-700 mb-4 tracking-tight">
-            {title}
+            Trusted by Industry Leaders
           </h2>
           <p className="text-[21px] text-apple-gray-500 max-w-2xl mx-auto">
-            {subtitle}
+            Our commitment to quality, safety, and excellence has earned the trust of clients across industries.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {trustSignals.map((item, index) => {
-            const Icon = iconMap[item.icon] || Award
+          {trustItems.map((item, index) => {
+            const Icon = item.icon
             return (
               <motion.div
                 key={item.label}

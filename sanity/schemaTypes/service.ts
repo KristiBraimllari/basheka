@@ -33,6 +33,12 @@ export default defineType({
       type: 'text',
     },
     {
+      name: 'icon',
+      title: 'Icon Name',
+      type: 'string',
+      description: 'Icon identifier (e.g., "laser", "structure", "finishing", "management")',
+    },
+    {
       name: 'image',
       title: 'Service Image',
       type: 'image',

@@ -4,7 +4,6 @@ import { GeistSans } from 'geist/font/sans'
 import './globals.css'
 import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
-import { getSiteSettings } from '@/lib/api'
 
 const teko = Teko({
   subsets: ['latin'],
@@ -24,23 +23,17 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const siteSettings = await getSiteSettings()
-
   return (
     <html lang="en" className={`scroll-smooth ${teko.variable}`}>
       <body className={GeistSans.className}>
         <Navigation />
         <main className="relative">{children}</main>
-        <Footer 
-          companyName={siteSettings.companyName}
-          tagline={siteSettings.tagline}
-          contactInfo={siteSettings.contactInfo}
-        />
+        <Footer />
       </body>
     </html>
   )
