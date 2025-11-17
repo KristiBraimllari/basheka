@@ -73,12 +73,22 @@ export default function HomeClient({ heroData, services }: HomeClientProps) {
               className="relative h-[600px] lg:h-[700px]"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-apple-gray-100 to-apple-gray-200 rounded-3xl overflow-hidden">
-                {heroData.imageUrl && (
+                {heroData.videoUrl ? (
+                  <video
+                    className="w-full h-full object-cover opacity-20"
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                  >
+                    <source src={heroData.videoUrl} type="video/mp4" />
+                  </video>
+                ) : heroData.imageUrl ? (
                   <div
                     className="w-full h-full bg-cover bg-center opacity-20"
                     style={{ backgroundImage: `url(${heroData.imageUrl})` }}
                   />
-                )}
+                ) : null}
               </div>
               {/* Floating Stats */}
               <motion.div
